@@ -4,8 +4,7 @@
   "description": "fullstackbankingapp",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "start": "react-scripts --openssl-legacy-provider start"
+    "test": "jest"
   },
   "author": "skaramje@gmail.com",
   "license": "MIT",
