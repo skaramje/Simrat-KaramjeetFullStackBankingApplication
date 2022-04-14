@@ -1,6 +1,6 @@
 //require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
-const url = secret.MONGODB_URI;
+const url = secrets.MONGODB_URI;
 let db = null;
 
 // connect to mongo
