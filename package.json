@@ -4,7 +4,8 @@
   "description": "fullstackbankingapp",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js"
   },
   "author": "skaramje@gmail.com",
   "license": "MIT",
