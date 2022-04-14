@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node index.js"
+    "start": "react-scripts --openssl-legacy-provider start"
   },
   "author": "skaramje@gmail.com",
   "license": "MIT",
