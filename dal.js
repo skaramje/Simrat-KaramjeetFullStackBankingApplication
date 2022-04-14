@@ -1,6 +1,6 @@
 require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
-const url = process.env.MONGODB_URI;
+const url = 'mongodb+srv://bankingappcluster:dAkdl3XIvYfeQrXv@bankingappcluster.91kce.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 let db = null;
 
 // connect to mongo
