@@ -40,6 +40,7 @@ app.get('/auth', function(req,res){
     res.send('Authentication Sucess!');
 })
 
-app.listen(3000, () => {
-    console.log('Running on port: 3000');
+var port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Running on port: ${port}`);
 })
