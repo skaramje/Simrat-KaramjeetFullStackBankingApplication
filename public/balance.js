@@ -9,7 +9,7 @@ function Balance(){
       status={status}
       body={show ?
         <BalanceForm setShow={setShow} setStatus={setStatus}/> :
-        <BalanceMsg setShow={setShow} setStatus={setStatus}/>}
+        <BalanceMsg status={status} setShow={setShow} setStatus={setStatus}/>}
     />
   )
 
@@ -17,7 +17,8 @@ function Balance(){
 
 function BalanceMsg(props){
   return(<>
-    <h5>Success</h5>
+    <h5>Success!</h5>
+    <h6>The account balance is USD {props.status}</h6>
     <button type="submit" 
       className="btn btn-light" 
       onClick={() => {
@@ -39,13 +40,11 @@ function BalanceForm(props){
     .then(text => {
         try {
             const data = JSON.parse(text);
-            console.log('text: ', text);
-            console.log('data: ', data);
-            console.log('balance: ', data.balance)
-            props.setStatus(text);
+            props.setStatus(data.balance);
             props.setShow(false);
-            setBalance(user.balance);
+            setBalance(data.balance);
             console.log('JSON:', data);
+  
         } catch(err) {
             props.setStatus(text)
             console.log('err:', text);
