@@ -8,7 +8,7 @@
         storageBucket: "bankingapp-6b317.appspot.com",
         messagingSenderId: "510713852890",
         appId: "1:510713852890:web:4625a125d034bacf5646e3"
-      }
+    };
       
     // Initialize Firebase
 
