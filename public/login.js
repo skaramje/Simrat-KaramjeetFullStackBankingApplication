@@ -99,6 +99,7 @@ function Login() {
           setShow(false);
         } catch (err) {
           console.log("err:", text);
+          alert('User does not exist');
         }
       });
 
