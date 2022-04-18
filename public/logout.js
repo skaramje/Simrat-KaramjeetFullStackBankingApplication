@@ -19,6 +19,7 @@ function Logout() {
       
       document.getElementById("createaccountlink").className = "nav-item nav-link me-auto";
       document.getElementById("loginlink").className = "nav-item nav-link me-auto";
+      activeuserMain = [];
       return;
     }
   }

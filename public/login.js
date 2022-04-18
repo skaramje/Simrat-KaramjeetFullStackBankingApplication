@@ -13,7 +13,7 @@ function Login() {
   const [databasepass, setDatabasepass] = React.useState("");
   const [databasebalance, setDatabasebalance] = React.useState(0);
   const [databasename, setDatabasename] = React.useState("");
-  var [result, setResult] = React.useState([]);
+
 
   function validate(field, label = "") {
     if (!field) {
@@ -76,7 +76,8 @@ function Login() {
 
     //var user = ctx.users.filter((user) => user.email === email)[0];
     //var pass = ctx.users.filter((user) => user.password === password)[0];
-    fetch(`/account/login/${email}/${password}`)
+    async function databaseauthentication(){
+      fetch(`/account/login/${email}/${password}`)
       .then((response) => response.text())
       .then((text) => {
         try {
@@ -89,31 +90,30 @@ function Login() {
           document.getElementById("logoutlink").className = "nav-item";
           document.getElementById("createaccountlink").className = "nav-item d-none";
           document.getElementById("loginlink").className = "nav-item d-none"
-          activeuserMain.push(data.name);
+          activeuserMain[0] = data.name;
           setDatabaseuser(data.email);
           setDatabasepass(data.password);
           setDatabasename(data.name);
           setDatabasebalance(data.balance);
           setActiveuser(data.name);
+          update(data.name, data.user, data.password, data.balance);
+          activeuserMain.splice(0, 1, data.name);
           setStatus("");
           setShow(false);
+          return;
         } catch (err) {
+          setShow(true);
+          clearForm();
           console.log("err:", text);
-          alert('User does not exist');
+          alert('Username and password do not match');
+          return;
         }
       });
-
+    }
+    databaseauthentication();
     
-
-    console.log(`username is ${databaseuser}`);
-    
-    activeuserMain.splice(0, 1, databasename);
-    console.log(`active user ${activeuser}`);
-    update(databasename, databasepass, databaseuser, databasebalance);
-    setShow(false);
   }
-  console.log(`active user main ${activeuserMain}`);
-
+  
   function clearForm() {
     setEmail("");
     setPassword("");
