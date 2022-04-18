@@ -14,29 +14,10 @@ function Login() {
   const [databasebalance, setDatabasebalance] = React.useState(0);
   const [databasename, setDatabasename] = React.useState("");
 
-
   function validate(field, label = "") {
     if (!field) {
       setStatus("Error: " + label);
       setTimeout(() => setStatus(""), 3000);
-      return false;
-    }
-    return true;
-  }
-
-  function authenticate(email, password) {
-    if (!email) {
-      alert("This account does not exist");
-      return false;
-    } else if (!password) {
-      alert("Password is incorrect");
-      return false;
-    }
-    return true;
-  }
-
-  function logincheck(name) {
-    if (activeuserMain[0] == name) {
       return false;
     }
     return true;
@@ -74,46 +55,46 @@ function Login() {
       return;
     }
 
-    //var user = ctx.users.filter((user) => user.email === email)[0];
-    //var pass = ctx.users.filter((user) => user.password === password)[0];
-    async function databaseauthentication(){
+    async function databaseauthentication() {
       fetch(`/account/login/${email}/${password}`)
-      .then((response) => response.text())
-      .then((text) => {
-        try {
-          const data = JSON.parse(text);
-          document.getElementById("loggedinuser").innerText = data.email;
-          document.getElementById("activeuser").innerText = data.name;
-          document.getElementById("depositlink").className = "nav-item";
-          document.getElementById("withdrawlink").className = "nav-item";
-          document.getElementById("balancelink").className = "nav-item";
-          document.getElementById("logoutlink").className = "nav-item";
-          document.getElementById("createaccountlink").className = "nav-item d-none";
-          document.getElementById("loginlink").className = "nav-item d-none"
-          activeuserMain[0] = data.name;
-          setDatabaseuser(data.email);
-          setDatabasepass(data.password);
-          setDatabasename(data.name);
-          setDatabasebalance(data.balance);
-          setActiveuser(data.name);
-          update(data.name, data.user, data.password, data.balance);
-          activeuserMain.splice(0, 1, data.name);
-          setStatus("");
-          setShow(false);
-          return;
-        } catch (err) {
-          setShow(true);
-          clearForm();
-          console.log("err:", text);
-          alert('Username and password do not match');
-          return;
-        }
-      });
+        .then((response) => response.text())
+        .then((text) => {
+          try {
+            const data = JSON.parse(text);
+
+            document.getElementById("loggedinuser").innerText = data.email;
+            document.getElementById("activeuser").innerText = data.name;
+            document.getElementById("depositlink").className = "nav-item";
+            document.getElementById("withdrawlink").className = "nav-item";
+            document.getElementById("balancelink").className = "nav-item";
+            document.getElementById("logoutlink").className = "nav-item";
+            document.getElementById("createaccountlink").className =
+              "nav-item d-none";
+            document.getElementById("loginlink").className = "nav-item d-none";
+
+            activeuserMain[0] = data.name;
+            setDatabaseuser(data.email);
+            setDatabasepass(data.password);
+            setDatabasename(data.name);
+            setDatabasebalance(data.balance);
+            setActiveuser(data.name);
+            update(data.name, data.user, data.password, data.balance);
+            activeuserMain.splice(0, 1, data.name);
+            setStatus("");
+            setShow(false);
+            return;
+          } catch (err) {
+            setShow(true);
+            clearForm();
+            console.log("err:", text);
+            alert("Username and password do not match");
+            return;
+          }
+        });
     }
     databaseauthentication();
-    
   }
-  
+
   function clearForm() {
     setEmail("");
     setPassword("");
@@ -160,8 +141,8 @@ function Login() {
               }}
             />
             <br />
-            {status} <br />
             {button ? (
+              
               <input
                 type="submit"
                 className="btn btn-light text-black-100"
@@ -169,6 +150,7 @@ function Login() {
                 value="Login"
                 id="submit-button"
               />
+              
             ) : (
               <input
                 type="submit"
