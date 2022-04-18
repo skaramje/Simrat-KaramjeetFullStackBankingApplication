@@ -2,6 +2,7 @@ const Route       = ReactRouterDOM.Route;
 const Link        = ReactRouterDOM.Link;
 const HashRouter  = ReactRouterDOM.HashRouter;
 const UserContext = React.createContext(null);
+const ActiveUserContext = React.createContext(null);
 
 function Card(props){
   function classes(){
@@ -11,7 +12,7 @@ function Card(props){
   }
 
   return (
-    <div className={classes()} style={{maxWidth: "18rem"}}>
+    <div className='card mb-2 bg-light text-dark m-auto' style={{maxWidth: "30rem"}}>
       <div className="card-header">{props.header}</div>
       <div className="card-body">
         {props.title && (<h5 className="card-title">{props.title}</h5>)}

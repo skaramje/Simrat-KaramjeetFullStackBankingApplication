@@ -1,0 +1,35 @@
+.navbar {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.navbar-nav .nav-item .nav-link:focus {
+  text-decoration: underline;
+  background-color: rgba(182, 70, 182, 0.123);
+}
+
+.btn {
+  color: black;
+  background-color: #fce2fe;
+  border-color: #ffffff;
+}
+
+a:link,
+a:visited {
+  color: black;
+}
+
+a:hover,
+a:active {
+  background-color: rgba(255, 0, 255, 0.123);
+  color: white;
+}
+
+.nav ul {
+  list-style: none;
+  text-align: center;
+}
+
+.nav ul li {
+  display: inline-block;
+}
