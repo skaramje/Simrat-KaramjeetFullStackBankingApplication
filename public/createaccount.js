@@ -46,12 +46,21 @@ function CreateAccount() {
       return;
     }
 
-    const dateTime = new Date();
-
-    ctx.users.push({
-      name,
+   
+    firebase.auth().createUserWithEmailAndPassword(
       email,
-      password,
+      password
+    )
+    .then((user) => {
+      var user = firebase.auth().currentUser;
+      const dateTime = new Date();
+      var cemail = user.email;
+      var cuid = user.uid;
+      var cpassword = "";
+      ctx.users.push({
+      cuid,
+      cemail,
+      cpassword,
       balance: 0,
       logs: [
         {
@@ -67,7 +76,22 @@ function CreateAccount() {
           transactionAmount: "NA",
         },
       ],
-    });
+      })
+      const url = `/account/create/${name}/${email}/${cuid}}`;
+      (async () => {
+        var res = await fetch(url);
+        var data = await res.json();
+        console.log(data);
+      })();
+      setShow(false);
+    }, function(error){
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(`Error: ${errorCode} ${errorMessage}`);
+    })
+    
+
+    
 
     console.log(name, email, password);
     const url = `/account/create/${name}/${email}/${password}`;
@@ -76,6 +100,11 @@ function CreateAccount() {
       var data = await res.json();
       console.log(data);
     })();
+
+    console.log(email.value);
+    console.log(password.value);
+
+   
     setShow(false);
   }
 

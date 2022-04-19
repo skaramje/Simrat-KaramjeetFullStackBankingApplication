@@ -48,10 +48,14 @@
       crossorigin
     ></script>
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script crossorigin src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+    <script crossorigin src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+
     <!-- load our react component. -->
     <script src="context.js" defer type="text/babel"></script>
     <script src="navbar.js" defer type="text/babel"></script>
-    
+
     <script src="createaccount.js" defer type="text/babel"></script>
     <script src="login.js" defer type="text/babel"></script>
     <script src="logout.js" defer type="text/babel"></script>
@@ -65,8 +69,24 @@
     <script src="index.js" defer type="text/babel"></script>
 
     <script>
-      document.getElementById('depositlink').style.display = "none";
+     // document.getElementById("depositlink").style.display = "none";
     </script>
-    
+
+    <script crossorigin type="module">
+      // Import the functions you need from the SDKs you need
+      
+      const firebaseConfig = {
+        apiKey: "AIzaSyD_Sbp8Dk9o55052uqtO05LiBGPhoy9K5U",
+        authDomain: "bankingapp-6b317.firebaseapp.com",
+        projectId: "bankingapp-6b317",
+        storageBucket: "bankingapp-6b317.appspot.com",
+        messagingSenderId: "510713852890",
+        appId: "1:510713852890:web:4625a125d034bacf5646e3",
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+
+    </script>
   </body>
 </html>

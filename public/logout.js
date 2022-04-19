@@ -3,11 +3,14 @@ function Logout() {
   var ctx = React.useContext(UserContext);
   var activeuserMain = React.useContext(ActiveUserContext);
 
+  
+
   async function updatelogout() {
     if (activeuserMain[0] === undefined) {
       alert("no user is logged in");
       return;
     } else {
+      firebase.auth().signOut();
       activeuserMain.splice(0, 1, undefined);
       setShow(false);
       document.getElementById("loggedinuser").innerText = "No user is signed in";
@@ -32,6 +35,7 @@ function Logout() {
         show ? (
           <button
             type="button"
+            id="logout"
             className="btn btn-light text-black-100"
             onClick={updatelogout}
           >

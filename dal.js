@@ -23,7 +23,7 @@ function create(name, email, password) {
             err ? reject(err) : resolve(doc);
         });    
     })
-}
+};
 
 // find user account 
 function find(email) {
@@ -35,7 +35,7 @@ function find(email) {
                 err ? reject(err) : resolve(docs);
             });
     })
-}
+};
 
 // find user account
 function findOne(email) {
@@ -46,7 +46,7 @@ function findOne(email) {
             .then((doc) => resolve(doc))
             .catch((err) => reject(err));
     })
-}
+};
 
 // update - deposit/withdraw amount
 function update(email, amount) {
@@ -64,7 +64,7 @@ function update(email, amount) {
 
 
     });
-}
+};
 
 // return all users by using the collection.find method
 function all() {
@@ -77,7 +77,7 @@ function all() {
                 err ? reject(err) : resolve(docs);
         });    
     })
-}
+};
 
 
 module.exports = { create, findOne, find, update, all };

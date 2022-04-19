@@ -14,8 +14,59 @@ function Login() {
   const [databasebalance, setDatabasebalance] = React.useState(0);
   const [databasename, setDatabasename] = React.useState("");
 
+  console.log(`user id: ${databaseuser} user name: ${databasename}`);
+
+  var loggedinuser = document.getElementById("loggedinuser");
+  var depositLink = document.getElementById("depositlink");
+  var withdrawLink = document.getElementById("withdrawlink");
+  var balanceLink = document.getElementById("balancelink");
+  var createLink = document.getElementById("createlink");
+  var loginLink = document.getElementById("loginlink");
+  var logoutLink = document.getElementById("logoutlink");
+
+  //var app = firebase.initializeApp(firebaseConfig);
+
+  firebase.auth().signOut();
+
+  firebase.auth().onAuthStateChanged((firebaseUser) => {
+    if (firebaseUser) {
+      console.log("Firebase Auth Logged-In: " + firebaseUser.email);
+
+      document.getElementById("loggedinuser").innerText = firebaseUser.email;
+      document.getElementById("activeuser").innerText = firebaseUser.name;
+      document.getElementById("depositlink").className = "nav-item";
+      document.getElementById("withdrawlink").className = "nav-item";
+      document.getElementById("balancelink").className = "nav-item";
+      document.getElementById("logoutlink").className = "nav-item";
+      document.getElementById("createaccountlink").className =
+        "nav-item d-none";
+      document.getElementById("loginlink").className = "nav-item d-none";
+    } else {
+      console.log("Firebase Auth Logged-Out");
+      document.getElementById("loggedinuser").innerText = "No user is signed in";
+      document.getElementById("activeuser").innerText = "Login";
+      document.getElementById("depositlink").className = "nav-item d-none";
+      document.getElementById("withdrawlink").className = "nav-item d-none";
+      document.getElementById("balancelink").className = "nav-item d-none";
+      document.getElementById("logoutlink").className = "nav-item d-none";
+      
+      document.getElementById("createaccountlink").className = "nav-item nav-link me-auto";
+      document.getElementById("loginlink").className = "nav-item nav-link me-auto";
+      activeuserMain = [];
+    }
+  });
+
   function validate(field, label = "") {
     if (!field) {
+      setStatus("Error: " + label);
+      setTimeout(() => setStatus(""), 3000);
+      return false;
+    }
+    return true;
+  }
+
+  function otherErrors(field, label = "") {
+    if (field) {
       setStatus("Error: " + label);
       setTimeout(() => setStatus(""), 3000);
       return false;
@@ -72,7 +123,7 @@ function Login() {
               "nav-item d-none";
             document.getElementById("loginlink").className = "nav-item d-none";
 
-            activeuserMain[0] = data.name;
+            //activeuserMain[0] = data.name;
             setDatabaseuser(data.email);
             setDatabasepass(data.password);
             setDatabasename(data.name);
@@ -87,6 +138,7 @@ function Login() {
             setShow(true);
             clearForm();
             console.log("err:", text);
+            otherErrors("mismatch", "username and password do not match");
             alert("Username and password do not match");
             return;
           }
@@ -103,6 +155,46 @@ function Login() {
   }
 
   function username() {
+    setShow(false);
+  }
+
+  function firebaseAuthentication() {
+    const auth = firebase.auth();
+    const promise = auth.signInWithEmailAndPassword(
+      email.value,
+      password.value
+    );
+    activeuserMain.splice(0, 1, email.value);
+    setStatus("");
+    setShow(false);
+    promise.catch((e) => console.log(e.message));
+  }
+
+  function googleLogin() {
+    console.log("google clicked");
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(function (result) {
+        //   loggedinuser.innerText = `You are logged in using the following email: ${result.user.email}`;
+        document.getElementById("loggedinuser").innerText = result.user.email;
+        document.getElementById("activeuser").innerText = result.user.name;
+        document.getElementById("depositlink").className = "nav-item";
+        document.getElementById("withdrawlink").className = "nav-item";
+        document.getElementById("balancelink").className = "nav-item";
+        document.getElementById("logoutlink").className = "nav-item";
+        document.getElementById("createaccountlink").className =
+          "nav-item d-none";
+        document.getElementById("loginlink").className = "nav-item d-none";
+        activeuserMain.splice(0, 1, result.user.email);
+        setStatus("");
+        setShow(false);
+      })
+      .catch(function (error) {
+        console.log(error.code);
+        console.log(error.message);
+      });
     setShow(false);
   }
 
@@ -142,23 +234,37 @@ function Login() {
             />
             <br />
             {button ? (
-              
               <input
                 type="submit"
                 className="btn btn-light text-black-100"
                 onClick={handleLogin}
-                value="Login"
+                value="Login with database authentication"
                 id="submit-button"
               />
-              
             ) : (
               <input
                 type="submit"
                 className="btn btn-light text-black-50"
-                value="Login"
+                value="Login with database authentication"
                 id="submit-button"
               />
             )}
+            <br />
+            <input
+              type="submit"
+              className="btn btn-light text-black-100"
+              id="firebase-submit-button"
+              onClick={firebaseAuthentication}
+              value="Login without database authentication (firebase auth)"
+            />
+            <br />
+            <input
+              type="submit"
+              className="btn btn-light text-black-100"
+              id="google-submit-button"
+              onClick={googleLogin}
+              value="Login with your Google account"
+            />
           </>
         ) : (
           <>
