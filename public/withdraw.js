@@ -55,7 +55,7 @@ function WithdrawForm(props){
     .then(text => {
         try {
             const data = JSON.parse(text);
-            props.setStatus(JSON.stringify(data.value));
+            //props.setStatus(JSON.stringify(data.value));
             props.setShow(false);
             console.log('JSON:', data);
         } catch(err) {
