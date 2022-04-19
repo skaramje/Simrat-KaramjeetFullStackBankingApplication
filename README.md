@@ -14,7 +14,7 @@ This project was created as a part of MIT xPRO Professional Certificate in Codin
 6 - Browse to http://localhost:3000 in a chrome/mozilla browser
 
 ## Deployed on Heroku
-[https://simratkaramjeetbankingapp.herokuapp.com/](Link)
+[Link](https://simratkaramjeetbankingapp.herokuapp.com/)
 
 ## App
 
