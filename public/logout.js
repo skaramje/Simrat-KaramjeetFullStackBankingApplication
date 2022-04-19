@@ -1,27 +1,10 @@
 function Logout() {
   const [show, setShow] = React.useState(true);
-  var ctx = React.useContext(UserContext);
-  var activeuserMain = React.useContext(ActiveUserContext);
 
-  
+  function updatelogout() {
+    firebase.auth().signOut();
 
-  async function updatelogout() {
-    
-      firebase.auth().signOut();
-      activeuserMain.splice(0, 1, undefined);
-      setShow(false);
-      document.getElementById("loggedinuser").innerText = "No user is signed in";
-      document.getElementById("activeuser").innerText = "Login";
-      document.getElementById("depositlink").className = "nav-item d-none";
-      document.getElementById("withdrawlink").className = "nav-item d-none";
-      document.getElementById("balancelink").className = "nav-item d-none";
-      document.getElementById("logoutlink").className = "nav-item d-none";
-      
-      document.getElementById("createaccountlink").className = "nav-item nav-link me-auto";
-      document.getElementById("loginlink").className = "nav-item nav-link me-auto";
-      activeuserMain = [];
-      return;
-    
+    setShow(false);
   }
 
   return (

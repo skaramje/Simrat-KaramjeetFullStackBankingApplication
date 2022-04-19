@@ -67,6 +67,7 @@
     <script src="logout.js" defer type="text/babel"></script>
     <script src="deposit.js" defer type="text/babel"></script>
     <script src="withdraw.js" defer type="text/babel"></script>
+    <script src="transaction.js" defer type="text/babel"></script>
     <!-- <script src="transactions.js" defer type="text/babel"></script> -->
     <script src="balance.js" defer type="text/babel"></script>
     <script src="alldata.js" defer type="text/babel"></script>
@@ -77,10 +78,58 @@
     <script>
       // document.getElementById("depositlink").style.display = "none";
     </script>
-
-    <script crossorigin type="module">
+    <script defer crossorigin type="module">
       // Import the functions you need from the SDKs you need
-      
+
+     
+      const firebaseConfig = {
+        apiKey: "AIzaSyD_Sbp8Dk9o55052uqtO05LiBGPhoy9K5U",
+        authDomain: "bankingapp-6b317.firebaseapp.com",
+        projectId: "bankingapp-6b317",
+        storageBucket: "bankingapp-6b317.appspot.com",
+        messagingSenderId: "510713852890",
+        appId: "1:510713852890:web:4625a125d034bacf5646e3",
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+
+      firebase.auth().signOut();
+
+      firebase.auth().onAuthStateChanged((firebaseUser) => {
+        if (firebaseUser) {
+          console.log("Firebase Auth Logged-In: " + firebaseUser.email);
+
+          document.getElementById("loggedinuser").innerText =
+            firebaseUser.email;
+          document.getElementById("activeuser").innerText = firebaseUser.email;
+          document.getElementById("depositlink").className = "nav-item";
+          document.getElementById("withdrawlink").className = "nav-item";
+          document.getElementById("balancelink").className = "nav-item";
+          document.getElementById("logoutlink").className = "nav-item";
+          document.getElementById("transactionslink").className = "nav-item";
+          document.getElementById("alldatalink").className = "nav-item";
+          document.getElementById("createaccountlink").className =
+            "nav-item d-none";
+          document.getElementById("loginlink").className = "nav-item d-none";
+          
+        } else {
+          console.log("Firebase Auth Logged-Out");
+          document.getElementById("loggedinuser").innerText =
+            "No user is signed in";
+          document.getElementById("activeuser").innerText = "No user";
+          document.getElementById("depositlink").className = "nav-item d-none";
+          document.getElementById("withdrawlink").className = "nav-item d-none";
+          document.getElementById("balancelink").className = "nav-item d-none";
+          document.getElementById("logoutlink").className = "nav-item d-none";
+          document.getElementById("transactionslink").className = "nav-item d-none";
+          document.getElementById("alldatalink").className = "nav-item d-none";
+          document.getElementById("createaccountlink").className =
+            "nav-item nav-link me-auto";
+          document.getElementById("loginlink").className =
+            "nav-item nav-link me-auto";
+        }
+      });
     </script>
   </body>
 </html>

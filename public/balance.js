@@ -1,71 +1,30 @@
-function Balance(){
-  const [show, setShow]     = React.useState(true);
-  const [status, setStatus] = React.useState('');  
-
+function Balance() {
   return (
     <Card
-      bgcolor="info"
-      header="Balance"
-      status={status}
-      body={show ?
-        <BalanceForm setShow={setShow} setStatus={setStatus}/> :
-        <BalanceMsg status={status} setShow={setShow} setStatus={setStatus}/>}
+      txtcolor="black"
+      header="Account Balance"
+      body={<BalanceForm/>}
     />
   )
-
 }
 
-function BalanceMsg(props){
-  return(<>
-    <h5>Success!</h5>
-    <h6>The account balance is USD {props.status}</h6>
-    <button type="submit" 
-      className="btn btn-light" 
-      onClick={() => {
-        props.setShow(true);
-        props.setStatus('');
-      }}>
-        Check balance again
-    </button>
-  </>);
-}
+function BalanceForm(props) {
+  const ctx = React.useContext(UserContext);  
+  const email = ctx.user.email;
+  const [balance, setBalance] = React.useState(0);  
 
-function BalanceForm(props){
-  const [email, setEmail]   = React.useState('');
-  const [balance, setBalance] = React.useState('');  
-
-  function handle(){
-    fetch(`/account/findOne/${email}`)
-    .then(response => response.text())
-    .then(text => {
-        try {
-            const data = JSON.parse(text);
-            props.setStatus(data.balance);
-            props.setShow(false);
-            setBalance(data.balance);
-            console.log('JSON:', data);
-  
-        } catch(err) {
-            props.setStatus(text)
-            console.log('err:', text);
-        }
-    });
-  }
+  fetch(`/account/findOne/${email}`)
+  .then(response => response.text())
+  .then(text => {
+      try {
+          const data = JSON.parse(text);
+          setBalance(data.balance);
+      } catch(err) {
+          console.log('err:', text);
+      }
+  });
 
   return (<>
-
-    Email<br/>
-    <input type="input" 
-      className="form-control" 
-      placeholder="Enter email" 
-      value={email} 
-      onChange={e => setEmail(e.currentTarget.value)}/><br/>
-
-    <button type="submit" 
-      className="btn btn-light" 
-      onClick={handle}>
-        Check Balance
-    </button>
-
+    <h5>Your current balance is ${parseFloat(balance).toFixed(2)}</h5>
   </>);
 }

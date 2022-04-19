@@ -40,44 +40,17 @@ function CreateAccount() {
       return;
     }
 
-    var user = ctx.users.filter((user) => user.email === email)[0];
-    if (user) {
-      alert("This user already exists");
-      return;
-    }
-
-   
+       
     firebase.auth().createUserWithEmailAndPassword(
       email,
       password
     )
     .then((user) => {
       var user = firebase.auth().currentUser;
-      const dateTime = new Date();
-      var cemail = user.email;
-      var cuid = user.uid;
-      var cpassword = "";
-      ctx.users.push({
-      cuid,
-      cemail,
-      cpassword,
-      balance: 0,
-      logs: [
-        {
-          transactionDate: `${
-            dateTime.getMonth() + 1
-          }/${dateTime.getDate()}/${dateTime.getFullYear()}`,
-          transactionTime: `${`0${dateTime.getHours()}`.slice(
-            -2
-          )}:${`0${dateTime.getMinutes()}`.slice(
-            -2
-          )}:${`0${dateTime.getSeconds()}`.slice(-2)}`,
-          transactionType: "Account Created",
-          transactionAmount: "NA",
-        },
-      ],
-      })
-      const url = `/account/create/${name}/${email}/${cuid}}`;
+      
+      ctx.user.email = user.email;
+      var uid = user.uid
+      const url = `/account/create/${name}/${email}/${uid}}`;
       (async () => {
         var res = await fetch(url);
         var data = await res.json();
@@ -90,10 +63,6 @@ function CreateAccount() {
       console.log(`Error: ${errorCode} ${errorMessage}`);
     })
     
-
-    
-
-    console.log(name, email, password);
     const url = `/account/create/${name}/${email}/${password}`;
     (async () => {
       var res = await fetch(url);
@@ -101,10 +70,6 @@ function CreateAccount() {
       console.log(data);
     })();
 
-    console.log(email.value);
-    console.log(password.value);
-
-   
     setShow(false);
   }
 
@@ -129,7 +94,7 @@ function CreateAccount() {
             <input
               type="input"
               className="form-control"
-              id="name"
+              id="nameinput"
               placeholder="Enter name"
               value={name}
               onChange={(e) => {
@@ -145,7 +110,7 @@ function CreateAccount() {
             <input
               type="input"
               className="form-control"
-              id="email"
+              id="emailinput"
               placeholder="Enter email"
               value={email}
               onChange={(e) => {
@@ -159,7 +124,7 @@ function CreateAccount() {
             <input
               type="password"
               className="form-control"
-              id="password"
+              id="passwordinput"
               placeholder="Enter password"
               value={password}
               onChange={(e) => {

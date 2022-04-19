@@ -1,6 +1,6 @@
 function NavBar() {
-  var activeuserMain = React.useContext(ActiveUserContext);
-  console.log(activeuserMain);
+  
+  
   return (
     <>
       <div className="container">
@@ -38,6 +38,7 @@ function NavBar() {
                     className="nav-link"
                     data-toggle="tooltip"
                     title="home"
+                    id="homelink"
                     aria-current="page"
                     href="#"
                   >
@@ -86,6 +87,7 @@ function NavBar() {
                     Withdraw
                   </a>
                 </li>
+                
                 <li className="nav-item d-none" id="balancelink">
                   <a
                     className="nav-link"
@@ -96,15 +98,24 @@ function NavBar() {
                     Balance
                   </a>
                 </li>
-                <li className="nav-item d-none">
+                <li className="nav-item d-none" id="alldatalink">
                   <a
                     className="nav-link"
-                    id="alldatalink"
                     data-toggle="tooltip"
                     title="view all users"
                     href="#/alldata/"
                   >
                     AllData
+                  </a>
+                </li>
+                <li className="nav-item d-none" id="transactionslink">
+                  <a
+                    className="nav-link"
+                    data-toggle="tooltip"
+                    title="send money to another account"
+                    href="#/transactions/"
+                  >
+                    Send Money
                   </a>
                 </li>
                 <li className="nav-item d-none" id="logoutlink">
@@ -113,6 +124,7 @@ function NavBar() {
                     data-toggle="tooltip"
                     title="sign out"
                     href="#/logout/"
+                  
                   >
                     Logout
                   </a>
