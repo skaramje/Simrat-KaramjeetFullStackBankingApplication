@@ -15,16 +15,23 @@ function Login() {
   const [databasename, setDatabasename] = React.useState("");
 
   console.log(`user id: ${databaseuser} user name: ${databasename}`);
+  var activeuserMain = React.useContext(ActiveUserContext);
+  const firebaseConfig = {
+    apiKey: "AIzaSyD_Sbp8Dk9o55052uqtO05LiBGPhoy9K5U",
+    authDomain: "bankingapp-6b317.firebaseapp.com",
+    projectId: "bankingapp-6b317",
+    storageBucket: "bankingapp-6b317.appspot.com",
+    messagingSenderId: "510713852890",
+    appId: "1:510713852890:web:4625a125d034bacf5646e3",
+  };
 
-  var loggedinuser = document.getElementById("loggedinuser");
-  var depositLink = document.getElementById("depositlink");
-  var withdrawLink = document.getElementById("withdrawlink");
-  var balanceLink = document.getElementById("balancelink");
-  var createLink = document.getElementById("createlink");
-  var loginLink = document.getElementById("loginlink");
-  var logoutLink = document.getElementById("logoutlink");
-
-  //var app = firebase.initializeApp(firebaseConfig);
+  // Initialize Firebase
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } else {
+    firebase.app(); // if already initialized, use that one
+  }
+  // firebase.initializeApp(firebaseConfig);
 
   firebase.auth().signOut();
 
@@ -33,7 +40,7 @@ function Login() {
       console.log("Firebase Auth Logged-In: " + firebaseUser.email);
 
       document.getElementById("loggedinuser").innerText = firebaseUser.email;
-      document.getElementById("activeuser").innerText = firebaseUser.name;
+      document.getElementById("activeuser").innerText = firebaseUser.email;
       document.getElementById("depositlink").className = "nav-item";
       document.getElementById("withdrawlink").className = "nav-item";
       document.getElementById("balancelink").className = "nav-item";
@@ -41,17 +48,21 @@ function Login() {
       document.getElementById("createaccountlink").className =
         "nav-item d-none";
       document.getElementById("loginlink").className = "nav-item d-none";
+      activeuserMain[0] = firebaseUser.email;
     } else {
       console.log("Firebase Auth Logged-Out");
-      document.getElementById("loggedinuser").innerText = "No user is signed in";
-      document.getElementById("activeuser").innerText = "Login";
+      document.getElementById("loggedinuser").innerText =
+        "No user is signed in";
+      document.getElementById("activeuser").innerText = "No user";
       document.getElementById("depositlink").className = "nav-item d-none";
       document.getElementById("withdrawlink").className = "nav-item d-none";
       document.getElementById("balancelink").className = "nav-item d-none";
       document.getElementById("logoutlink").className = "nav-item d-none";
-      
-      document.getElementById("createaccountlink").className = "nav-item nav-link me-auto";
-      document.getElementById("loginlink").className = "nav-item nav-link me-auto";
+
+      document.getElementById("createaccountlink").className =
+        "nav-item nav-link me-auto";
+      document.getElementById("loginlink").className =
+        "nav-item nav-link me-auto";
       activeuserMain = [];
     }
   });
@@ -123,7 +134,7 @@ function Login() {
               "nav-item d-none";
             document.getElementById("loginlink").className = "nav-item d-none";
 
-            //activeuserMain[0] = data.name;
+            activeuserMain[0] = data.name;
             setDatabaseuser(data.email);
             setDatabasepass(data.password);
             setDatabasename(data.name);
@@ -132,6 +143,7 @@ function Login() {
             update(data.name, data.user, data.password, data.balance);
             activeuserMain.splice(0, 1, data.name);
             setStatus("");
+            console.log(`ctx: ${ctx}`);
             setShow(false);
             return;
           } catch (err) {
@@ -154,17 +166,14 @@ function Login() {
     setButton(false);
   }
 
-  function username() {
-    setShow(false);
-  }
+  
 
   function firebaseAuthentication() {
     const auth = firebase.auth();
-    const promise = auth.signInWithEmailAndPassword(
-      email.value,
-      password.value
-    );
-    activeuserMain.splice(0, 1, email.value);
+    const promise = auth.signInWithEmailAndPassword(email, password);
+    activeuserMain.splice(0, 1, email);
+    document.getElementById("activeuser").innerText = "Logged in";
+    setActiveuser(email);
     setStatus("");
     setShow(false);
     promise.catch((e) => console.log(e.message));
@@ -188,6 +197,7 @@ function Login() {
           "nav-item d-none";
         document.getElementById("loginlink").className = "nav-item d-none";
         activeuserMain.splice(0, 1, result.user.email);
+        setActiveuser(email.value);
         setStatus("");
         setShow(false);
       })
@@ -269,7 +279,7 @@ function Login() {
         ) : (
           <>
             <h5>Success</h5>
-            <button type="submit" className="btn btn-light" onClick={username}>
+            <button type="submit" className="btn btn-light">
               Welcome back, {activeuser}!
             </button>
           </>

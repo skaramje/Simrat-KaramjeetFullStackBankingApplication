@@ -140,7 +140,7 @@ function NavBar() {
                   href="#/login/"
                 >
                   {" "}
-                  Login
+                  No user
                 </a>
               </button>
             </div>

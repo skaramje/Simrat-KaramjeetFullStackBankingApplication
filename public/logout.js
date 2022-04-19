@@ -6,10 +6,7 @@ function Logout() {
   
 
   async function updatelogout() {
-    if (activeuserMain[0] === undefined) {
-      alert("no user is logged in");
-      return;
-    } else {
+    
       firebase.auth().signOut();
       activeuserMain.splice(0, 1, undefined);
       setShow(false);
@@ -24,7 +21,7 @@ function Logout() {
       document.getElementById("loginlink").className = "nav-item nav-link me-auto";
       activeuserMain = [];
       return;
-    }
+    
   }
 
   return (
