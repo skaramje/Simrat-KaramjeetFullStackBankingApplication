@@ -13,6 +13,9 @@ This project was created as a part of MIT xPRO Professional Certificate in Codin
 5 - Run 'node index.js' in the terminal at the root of the project folder
 6 - Browse to http://localhost:3000 in a chrome/mozilla browser
 
+## Deployed on Heroku
+[https://simratkaramjeetbankingapp.herokuapp.com/] Weblink
+
 ## App
 
 ![App](FullStackBank.gif)
