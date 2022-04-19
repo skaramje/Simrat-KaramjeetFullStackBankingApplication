@@ -1,6 +1,7 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
 
+
 // firebase service account pk
 const type = process.env.type;
 const project_id = process.env.project_id;

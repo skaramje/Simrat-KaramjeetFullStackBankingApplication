@@ -87,7 +87,7 @@ function Login() {
           console.log(`Error: ${errorCode} ${errorMessage}`);
         })
         
-        const url = `/account/create/${name}/${email}/${password}`;
+        const url = `/account/create/${user.name}/${email}/${password}`;
         (async () => {
           var res = await fetch(url);
           var data = await res.json();

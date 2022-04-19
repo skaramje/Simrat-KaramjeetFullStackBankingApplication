@@ -1,5 +1,6 @@
 var express = require('express');
 var app     = express();
+var admin   = require('./admin');
 var cors    = require('cors');
 var dal     = require('./dal.js');
 const e     = require('express');
@@ -8,6 +9,45 @@ const e     = require('express');
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
+
+async function verifyToken(req,res,next){
+    const idToken = req.headers.authorization;
+    console.log('idToken:', idToken);
+
+    if(idToken){
+        admin.auth().verifyIdToken(idToken)
+            .then(function(decodedToken) {
+                console.log('DecodedToken:',decodedToken);
+                console.log('Decoded token success!');
+                return next();
+            }).catch(function(error) {
+                console.log('Decoded token fail!');
+                return res.status(401).send('You are not authorized');
+            });
+    }
+    else{
+        console.log('Token not found!');
+        return res.status(401).send('You are not authorized');        
+    }
+}
+
+app.use('#/alldata/', verifyToken);
+
+app.get('#/alldata/', function(req,res){
+    // read token from header
+    const idToken = req.headers.authorization
+    console.log('header:', idToken);
+
+    // verify token
+    admin.auth().verifyIdToken(idToken)
+        .then(function(decodedToken) {
+            console.log('decodedToken:',decodedToken);
+            res.send('Authentication Sucess!');
+        }).catch(function(error) {
+            console.log('error:', error);
+            res.send('Authentication Fail!');
+        });
+})
 
 // create user account
 app.get('/account/create/:name/:email/:password', function (req, res) {
