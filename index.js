@@ -51,9 +51,12 @@ async function verifyToken(req,res,next){
     }
 }
 
-app.use('/#/alldata', verifyToken);
+app.use('/alldata', verifyToken);
+app.use('/deposit', verifyToken);
+app.use('/withdraw', verifyToken);
+app.use('/balance', verifyToken);
 
-app.get('/#/alldata', function(req,res){
+app.get('/alldata', function(req,res){
     // read token from header
     const idToken = req.headers.authorization
     console.log('header:', idToken);
