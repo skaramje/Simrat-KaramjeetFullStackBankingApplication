@@ -52,9 +52,25 @@ async function verifyToken(req,res,next){
 }
 
 app.use('/alldata', verifyToken);
-app.use('#/alldata', verifyToken);
+app.use('/#/alldata', verifyToken);
 
 app.get('/alldata', function(req,res){
+    // read token from header
+    const idToken = req.headers.authorization
+    console.log('header:', idToken);
+
+    // verify token
+    admin.auth().verifyIdToken(idToken)
+        .then(function(decodedToken) {
+            console.log('decodedToken:',decodedToken);
+            res.send('Authentication Sucess!');
+        }).catch(function(error) {
+            console.log('error:', error);
+            res.send('Authentication Fail!');
+        });
+})
+
+app.get('/#/alldata', function(req,res){
     // read token from header
     const idToken = req.headers.authorization
     console.log('header:', idToken);
