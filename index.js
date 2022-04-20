@@ -52,6 +52,7 @@ async function verifyToken(req,res,next){
 }
 
 app.use('/alldata', verifyToken);
+app.use('#/alldata', verifyToken);
 
 app.get('/alldata', function(req,res){
     // read token from header
