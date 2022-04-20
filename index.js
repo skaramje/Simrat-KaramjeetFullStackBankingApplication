@@ -4,6 +4,26 @@ var admin   = require('./admin');
 var cors    = require('cors');
 var dal     = require('./dal.js');
 const e     = require('express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+const swaggerDocument = require('./swagger.json');
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: 'Library API',
+            version: '1.0.0'
+        }
+    },
+    apis: ['index.js']
+};
+
+app.use(express.json());
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 // used to serve static files from public directory
 app.use(express.static('public'));
@@ -31,9 +51,9 @@ async function verifyToken(req,res,next){
     }
 }
 
-app.use('#/alldata/', verifyToken);
+app.use('/alldata', verifyToken);
 
-app.get('#/alldata/', function(req,res){
+app.get('/alldata', function(req,res){
     // read token from header
     const idToken = req.headers.authorization
     console.log('header:', idToken);
@@ -49,7 +69,6 @@ app.get('#/alldata/', function(req,res){
         });
 })
 
-// create user account
 app.get('/account/create/:name/:email/:password', function (req, res) {
 
     // check if account exists

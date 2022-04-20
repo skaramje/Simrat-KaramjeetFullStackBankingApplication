@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "admin": "^1.4.1",
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
@@ -18,7 +19,9 @@
     "mongodb": "^4.5.0",
     "nodemon": "^2.0.15",
     "request": "^2.88.2",
-    "supertest": "^6.2.2"
+    "supertest": "^6.2.2",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.3.0"
   },
   "engines": {
     "node": "14.17.0"
