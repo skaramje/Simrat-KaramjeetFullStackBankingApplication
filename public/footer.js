@@ -6,7 +6,7 @@ function Footer() {
           <span className="text-muted">
             © 2022 Copyright:
             <a href="https://www.linkedin.com/in/simrat-karamjeet/">
-              Simrat karamjeet
+              Simrat Karamjeet
             </a>
           </span>
         </div>
